@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class CourseItems extends Component {
   constructor(props) {
@@ -7,13 +8,21 @@ export default class CourseItems extends Component {
   render() {
     return (
       <div className="card p-2">
-        <img src={this.props.data.Image} alt="phim" />
+        <img
+          style={{ width: "100%", height: 250 }}
+          src={this.props.data.hinhAnh}
+        />
         <div style={{ fontWeight: "bold" }} className="lead">
-          {this.props.data.Title}
+          {this.props.data.tenKhoaHoc}
         </div>
-        <div className="lead">{this.props.data.Director}</div>
-        <div className="lead">{this.props.data.Rating}</div>
-        <button className="btn btn-success">Get Detail</button>
+        <div className="lead">{this.props.data.moTa}</div>
+
+        <Link
+          to={`/detail/${this.props.data.maKhoaHoc}`}
+          className="btn btn-success"
+        >
+          Get Detail
+        </Link>
       </div>
     );
   }

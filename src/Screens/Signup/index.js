@@ -1,28 +1,24 @@
 import React, { Component } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as yup from "yup";
-const signUpUserSchema = yup.object().shape({
-  taiKhoan: yup.string().required("* Field is required"),
-  matKhau: yup.string().required("* Field is required"),
-  hoTen: yup.string().required("* Field is required"),
-  email: yup
-    .string()
-    .required("* Field is required")
-    .email("* Email is invalid"),
-  soDt: yup
-    .string()
-    .required("* Field is required")
-    .matches(/^[0-9]+$/),
-  maNhom: yup.string().required("* Field is required"),
-});
+
+import { newUserService } from "../../Services";
+import { signUpUserSchema } from "../../Services/user";
+
 class SignupScreen extends Component {
   _handleSubmit = (values) => {
-    console.log(values);
+    newUserService
+      .signUp(values)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   render() {
     return (
       <div className="w-50 mx-auto">
-        <h1 className="display-4 text-center">Sign Up</h1>
+        <h1 className="display-4 text-center">Đăng Ký</h1>
         <Formik
           initialValues={{
             taiKhoan: "",
@@ -138,7 +134,7 @@ class SignupScreen extends Component {
                 />
               </div>
               <div className="text-center mt-2">
-                <button className="btn btn-success">Submit</button>
+                <button className="btn btn-success">Đăng Ký</button>
               </div>
             </Form>
           )}

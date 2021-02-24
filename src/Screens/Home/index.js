@@ -1,22 +1,23 @@
 import React, { Component } from "react";
 import CourseItems from "../../Components/CourseItems";
-import axios from "axios";
+
 import { connect, useSelector, useDispatch } from "react-redux";
+import { fetchMovie } from "../../Redux/Action/movie";
 
 class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movieList: [],
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     movieList: [],
+  //   };
+  // }
   render() {
     return (
       <div>
-        <h1 className="display-4 text-center">Danh sách phim</h1>
+        <h1 className="display-4 text-center">Danh sách khoá học</h1>
         <div className="container">
           <div className="row">
-            {this.state.movieList.map((item, index) => {
+            {this.props.movieList.map((item, index) => {
               return (
                 <div key={index} className="col-2">
                   <CourseItems data={item} />
@@ -30,23 +31,11 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    axios({
-      url: "http://svcy.myclass.vn/api/Movie/GetMovie",
-      method: "GET",
-    })
-      .then((res) => {
-        console.log(res);
-        this.setState({ movieList: res.data });
-        // this.props.dispatch({
-        //   type: "FETCH_MOVIE",
-        //   payload: res.data,
-        // });
-      })
-      .catch((error) => console.log(error));
+    this.props.dispatch(fetchMovie());
   }
 }
-// const mapStateToProp = (state) => ({
-//   movieList: state.movie.movies,
-// });
-// export default connect(mapStateToProp)(HomeScreen);
-export default HomeScreen;
+const mapStateToProp = (state) => ({
+  movieList: state.movie.movies,
+});
+export default connect(mapStateToProp)(HomeScreen);
+// export default HomeScreen;

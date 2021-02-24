@@ -1,32 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
+import { fetchDetailMovies } from "../../Redux/Action/movie";
 
-class CouresDetailScreen extends Component {
+class MovieDetailScreen extends Component {
   render() {
     return (
       <div>
-        <img src={this.props.movieDetail.Image} />
-        <div>{this.props.movieDetail.Description}</div>
-        <div>{this.props.movieDetail.ShowTimes[0].DateReady}</div>
+        <img
+          src={this.props.movieDetail.hinhAnh}
+          style={{ width: 300, height: 230 }}
+        />
+        <div>{this.props.movieDetail.tenKhoaHoc}</div>
+        <div>{this.props.movieDetail.moTa}</div>
       </div>
     );
   }
   componentDidMount() {
-    axios({
-      url: "http://svcy.myclass.vn/api/Movie/GetMovieDetail/1",
-      method: "GET",
-    })
-      .then((res) => {
-        console.log(res);
-        this.props.dispatch({
-          type: "FETCH_DETAIL",
-          payload: res.data,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.props.dispatch(fetchDetailMovies(this.props.match.params.movieId));
   }
 }
 const mapStateToProps = (state) => ({
@@ -34,7 +24,8 @@ const mapStateToProps = (state) => ({
     ID: "",
     Image: "",
     Description: "",
+    Title: "",
     ShowTimes: [{}],
   },
 });
-export default connect(mapStateToProps)(CouresDetailScreen);
+export default connect(mapStateToProps)(MovieDetailScreen);
