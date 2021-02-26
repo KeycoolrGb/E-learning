@@ -36,31 +36,34 @@ class Header extends Component {
               </li>
             </ul>
             <ul className="navbar-nav mb-2 mb-lg-0">
-              <li className="nav-item">
-                <span className="nav-link">
-                  Hi,
-                  {/* {this.props.credentials.hoTen} */}
-                </span>
-              </li>
-
-              <li className="nav-item">
-                <NavLink
-                  activeStyle={{ color: "red" }}
-                  to="/signup"
-                  className="nav-link"
-                >
-                  Đăng Ký
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  activeStyle={{ color: "red" }}
-                  to="/signin"
-                  className="nav-link"
-                >
-                  Đăng Nhập
-                </NavLink>
-              </li>
+              {this.props.credentials ? (
+                <li className="nav-item">
+                  <span className="nav-link">
+                    Hi, {this.props.credentials.hoTen}
+                  </span>
+                </li>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <NavLink
+                      activeStyle={{ color: "red" }}
+                      to="/signup"
+                      className="nav-link"
+                    >
+                      Đăng Ký
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      activeStyle={{ color: "red" }}
+                      to="/signin"
+                      className="nav-link"
+                    >
+                      Đăng Nhập
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
@@ -72,5 +75,3 @@ const mapStateToProps = (state) => {
   return { credentials: state.user.credentials };
 };
 export default connect(mapStateToProps)(Header);
-// export default connect(mapStateToProps)(Header);
-// export default Header;

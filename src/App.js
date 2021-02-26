@@ -1,28 +1,21 @@
 // import logo from "./logo.svg";
 import "./App.css";
 import HomeScreen from "./Screens/Home";
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
-import RootReducer from "./Redux/Reducer/root";
 import MovieDetailScreen from "./Screens/Detail";
 import SignupScreen from "./Screens/Signup";
 import SigninScreen from "./Screens/Signin";
-import thunk from "redux-thunk";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Layout/header";
-function App() {
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-  const store = createStore(
-    RootReducer,
-    composeEnhancers(applyMiddleware(thunk))
-  );
-  return (
-    <>
-      <Router>
-        <Header />
-        <Provider store={store}>
+import { Component } from "react";
+import { connect } from "react-redux";
+import { actionCreater } from "./Redux/Action";
+import { FETCH_CREDENTIALS } from "./Redux/Action/type";
+class App extends Component {
+  render() {
+    return (
+      <>
+        <Router>
+          <Header />
           <Switch>
             {/* : ở đây là để truyền id phim vào */}
             <Route path="/detail/:movieId" component={MovieDetailScreen} />
@@ -30,10 +23,21 @@ function App() {
             <Route path="/signup" component={SignupScreen} />
             <Route path="/" component={HomeScreen} />
           </Switch>
-        </Provider>
-      </Router>
-    </>
-  );
+        </Router>
+      </>
+    );
+  }
+  _getLocalStorageData = () => {
+    const credentials = localStorage.getItem("credentials");
+    if (credentials) {
+      this.props.dispatch(
+        actionCreater(FETCH_CREDENTIALS, JSON.parse(credentials))
+      );
+    }
+  };
+  componentDidMount() {
+    this._getLocalStorageData();
+  }
 }
 
-export default App;
+export default connect()(App);
