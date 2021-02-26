@@ -23,6 +23,14 @@ class UserService {
       data,
     });
   }
+  signIn(user) {
+    return axios({
+      url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/DangNhap`,
+
+      method: "POST",
+      data: user,
+    });
+  }
 }
 
 export default UserService;

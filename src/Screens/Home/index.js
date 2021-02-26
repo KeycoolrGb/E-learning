@@ -34,8 +34,8 @@ class HomeScreen extends Component {
     this.props.dispatch(fetchMovie());
   }
 }
-const mapStateToProp = (state) => ({
+const mapStateToProps = (state) => ({
   movieList: state.movie.movies,
 });
-export default connect(mapStateToProp)(HomeScreen);
+export default connect(mapStateToProps)(HomeScreen);
 // export default HomeScreen;

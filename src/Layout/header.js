@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../Assets/Images/logo.png";
 import Classes from "./style.module.css";
+import { connect } from "react-redux";
 class Header extends Component {
   render() {
     return (
@@ -36,6 +37,13 @@ class Header extends Component {
             </ul>
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
+                <span className="nav-link">
+                  Hi,
+                  {/* {this.props.credentials.hoTen} */}
+                </span>
+              </li>
+
+              <li className="nav-item">
                 <NavLink
                   activeStyle={{ color: "red" }}
                   to="/signup"
@@ -60,4 +68,9 @@ class Header extends Component {
     );
   }
 }
-export default Header;
+const mapStateToProps = (state) => {
+  return { credentials: state.user.credentials };
+};
+export default connect(mapStateToProps)(Header);
+// export default connect(mapStateToProps)(Header);
+// export default Header;

@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { Form, Field, Formik } from "formik";
+import { newUserService } from "../../Services";
+import { login } from "../../Redux/Action/user";
+import { connect } from "react-redux";
 export class SigninScreen extends Component {
   render() {
     return (
       <Formik
         onSubmit={(values) => {
-          console.log(values);
+          this.props.dispatch(login(values));
         }}
         initialValues={{ taiKhoan: "", matKhau: "" }}
         render={({ handleChange }) => (
@@ -39,4 +42,4 @@ export class SigninScreen extends Component {
   }
 }
 
-export default SigninScreen;
+export default connect()(SigninScreen);
